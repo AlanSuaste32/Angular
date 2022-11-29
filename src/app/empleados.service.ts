@@ -10,14 +10,28 @@ export class EmpleadosService{
 
   }
 
-    empleados:Empleado[]=[
+  setEmpleados(misEmpleados:Empleado[]){
+
+    this.empleados=misEmpleados;
+
+  }
+
+  obtenerEmpleados(){
+
+    return this.dataService.cargarEmpleados();
+
+  }
+
+  empleados:Empleado[]=[];
+
+    /*empleados:Empleado[]=[
 
         new Empleado("Alan", "Suaste", "Presidente", 7800),
         new Empleado("Ana", "Canche", "Directora", 5800),
         new Empleado("Maria", "Fernandez", "Jefa Seccion", 3800),
         new Empleado("Laura", "Lopes", "Administrativo", 2800)
     
-      ];
+      ];*/
 
       agregarEmpleadoServicio(empleado:Empleado){
 
@@ -45,11 +59,22 @@ export class EmpleadosService{
           empleadoModificado.apellido=empleado.apellido;
           empleadoModificado.cargo=empleado.cargo;
           empleadoModificado.salario=empleado.salario;
+
+          this.dataService.actualizarEmpleado(indice, empleado);
+
       }
 
       eliminarEmpleado(indice:number){
 
         this.empleados.splice(indice,1);
+
+        this.dataService.eliminarEmpleado(indice);
+        
+        if(this.empleados!=null){
+
+          this.dataService.guardarEmpleados(this.empleados);
+
+        }
 
       }
 
